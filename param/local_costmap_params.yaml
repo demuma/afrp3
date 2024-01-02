@@ -1,0 +1,17 @@
+local_costmap:
+  global_frame: map
+  robot_base_frame: ego_vehicle
+
+  update_frequency: 10.0
+  publish_frequency: 10.0
+  transform_tolerance: 0.5  
+
+  static_map: false  
+  rolling_window: true
+  width: 50
+  height: 50
+  resolution: 0.05
+  
+  inflation_radius: 5.0
+  cost_scaling_factor: 0.5
+  

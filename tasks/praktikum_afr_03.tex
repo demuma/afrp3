@@ -1,0 +1,551 @@
+\documentclass[ti,nofooter]{own-haw-page}
+\usepackage[german]{babel}
+\usepackage{color}
+\usepackage{enumitem}
+\usepackage{nameref}
+\usepackage{url}
+\usepackage{seqsplit}
+\usepackage[utf8]{inputenc}
+\usepackage[hidelinks]{hyperref}
+\usepackage[many]{tcolorbox}
+\usepackage{tabto}
+
+\newcommand{\raus}[1]{}
+\newcommand{\aufg}{\marginpar{{\em Protokoll!}}}
+\newcommand{\back}{\ensuremath{\backslash}}
+\newcommand{\pfeil}{\ensuremath{\rightarrow}}
+\newcommand{\platzlinie}[1]{%
+~\\[#1]
+~\\
+%$\underline{\hfill}$~\\
+\hrule~\\
+}
+
+\definecolor{lightblue}{rgb}{0.8, 0.9 ,1}
+
+\newcommand{\arrow}{{\textgreater{}\textgreater} }
+
+% Tilde%%%%%
+\newcommand{\addtildealt}{\textasciitilde{}}
+% schicker, funktioniert noch nicht:
+%\newcommand{\addtilde}{{\Large\textasciitilde{}}}
+
+\newcommand{\addtildealts}{{\fontfamily{ptm}\selectfont\textasciitilde}{}}
+
+\newcommand{\addtilde}{\raisebox{-0.3em}\textasciitilde{}}
+
+% Abstand
+\newcommand{\addspace}[1]{\vspace{#1}}
+
+% Codezeile mit $ beginnend
+\newcommand{\command}[1]{%
+  \vspace{10pt}
+  {\ttfamily \fcolorbox{black}{lightblue}{
+      \parbox{\textwidth} {
+        \vspace{-10pt}
+        \def\labelitemi{\$}
+        \begin{itemize}[leftmargin=3.5ex, itemsep=-1ex, rightmargin=4ex]
+          #1
+          \vspace{-10pt}
+      \end{itemize}}
+  }}\vspace{10pt}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Neues Design (tcolorbox)
+\tcbset{settings/.style={
+    fontupper=\ttfamily,
+    breakable,
+    enhanced, 
+    colback=lightblue, 
+    arc=0mm, 
+    boxrule=0.5pt,
+    enlarge bottom by=0.5ex,
+    enlarge top by=1ex,  
+    left=1.5ex,
+    right=0ex,
+    top=0.4ex,
+    bottom=0.4ex}}
+
+% Nichtnummerierter Code (neu)
+\newcommand{\codespace}[1]{
+  \begin{tcolorbox}[settings]{}
+    #1
+  \end{tcolorbox}
+  \vspace{10pt}
+}
+
+% Codezeile mit $ beginnend (neu, unbenutzt)
+\newcommand{\codedollar}[1]{
+  \begin{tcolorbox}[settings]{}
+    \def\labelitemi{\$}
+    \begin{itemize}[leftmargin=3ex, itemsep=-1ex]
+      #1
+    \end{itemize}
+  \end{tcolorbox}
+}
+
+% Unbenutzt
+\newcommand{\codenumber}[1]{
+  \begin{tcolorbox}[settings]{}
+    \begin{enumerate}[leftmargin=3ex, label={\arabic*}, itemsep=-1ex]
+      #1
+    \end{enumerate}
+  \end{tcolorbox}
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Nichtnummerierter Code (alt)
+\newcommand{\codebox}[1]{%
+  \vspace{10pt}
+  {\ttfamily \fcolorbox{black}{lightblue}{
+      \parbox{\textwidth} {
+        \vspace{-10pt}
+        \def\labelitemi{}
+        \begin{itemize}[leftmargin=1ex, itemsep=-1ex, rightmargin=4ex]
+          #1
+          \vspace{-10pt}
+      \end{itemize}}
+  }}\vspace{10pt}}
+
+% Normaler nummerierter Code
+\newcommand{\code}[1]{
+  \vspace{10pt}
+  %{\setlength{\fboxrule}{1pt} % Rahmendicke definieren
+  {\ttfamily \fcolorbox{black}{lightblue}{
+      \parbox{\textwidth} {
+        \vspace{-10pt}
+        \begin{enumerate}[leftmargin=3.5ex, label={\arabic*}, itemsep=-1ex, rightmargin=4ex]
+          #1
+          \vspace{-10pt}
+      \end{enumerate}}
+  }}\vspace{10pt}}
+%}
+
+\sloppy 
+
+
+\begin{document}
+%\date{16.~April~2020}
+%\date{07.~April~2020}
+%\date{07.~Mai~2020}
+%\date{29.~Mai~2020}
+%\date{16.~January~2021}
+\date{08.~November~2022}
+
+
+%\setcounter{section}{0} % AFRP 1
+%\setcounter{section}{1} % AFRP 2
+\setcounter{section}{2} % AFRP 3
+\newcounter{dummymcpdsv} 
+\setcounter{dummymcpdsv}{\value{section}}
+\addtocounter{dummymcpdsv}{1}
+
+
+\begin{page}
+
+\begin{Large}
+{\centering \bfseries \"{U}bungsblatt   \arabic{dummymcpdsv}\\ zur Veranstaltung  
+\glqq AFR -- Autonomes Fahren und Robotik''\\}
+\end{Large}
+~\\[-0.5cm]
+
+\section{Navigation und Pfadplanung}
+
+In der \"{U}bung \arabic{dummymcpdsv} geht es um Navigationsstrategien und Pfadplanung innerhalb bekannter und bereits kartierter Umgebungen. \\
+
+
+\textbf{Zur Bearbeitung der \"{U}bungsaufgaben:} Bearbeiten Sie auf jeden Fall
+\textit{alle} \"{U}bungsaufgaben. Ausgenommen hiervon sind lediglich die mit \glqq
+optional'' gekennzeichneten Textstellen. Lesen Sie sich die Aufgaben gut durch.
+Sollten Sie eine Aufgabe nicht l\"{o}sen k\"{o}nnen, so beschreiben Sie
+zumindest, wie weit Sie gekommen sind und auf welche Weise Sie vorgegangen sind.
+%
+Aufgaben mit der Randbemerkung \textit{``Protokoll!}'' sind 
+%Die Aufgaben sind direkt 
+im Protokoll zu beantworten.
+Als L\"{o}sung der Aufgaben ist %entweder
+%alternativ
+(je nach Aufgabe)
+Programmcode abzugeben
+(kommentiert) oder ein kurzer Text.
+
+
+\section{Programmierung}
+
+In der \"{U}bung 3 geht es um Navigationsstrategien und Pfadplanung innerhalb bekannter und bereits kartierter Umgebungen.
+
+\subsection{Vorbereitungsaufgaben}
+
+\begin{enumerate}
+
+\item Schauen Sie sich einmal die Beschreibungen zu den \textbf{ROS}-packages
+\textit{AMCL}, \textit{teb\_local\_planner}, \textit{dwa\_local\_planner} und \textit{global\_planner} im \textit{ROS-Wiki} an. Was wird zu den Algorithmen und zur Funktionsweise gesagt? 
+
+\end{enumerate}
+
+\subsection{Praktikumsaufgaben}
+
+
+\begin{enumerate}
+
+\item 
+Bearbeiten Sie die Schritte \textbf{\nameref{sec:locnav}} (Anhang \ref{sec:locnav}). Wie findest sich das Fahrzeug in der Umgebung zurecht? Beschreiben Sie, was nach der Positionssch\"{a}tzung passiert.
+\aufg
+
+\item 
+\"{A}ndern Sie den \textit{Global planner} von \textbf{D*} zu \textbf{A*} mittels \textit{use\_quadratic}. Wie beeinflusst diese \"{A}nderung den Pfadplanungsprozess? Probieren Sie die anderen beiden \textit{Local planner}. Wie unterscheiden diese sich voneinander? Optimieren Sie die Parameter. 
+\aufg
+
+\item 
+Welche Aufgabe haben die lokale und globale Kostenkarte? Ver\"{a}ndern Sie diese mittels \textit{inflation\_radius} und \textit{cost\_scaling\_factor}. Wie wirkt sich diese Parameter aus? 
+\aufg
+
+\item 
+Bearbeiten Sie die Schritte \textbf{\nameref{sec:carlanav}} (Anhang \ref{sec:carlanav}). Beschreiben Sie den Ablauf der Pfadplanung und Pfadverfolgung im Carla Simulator. Welche Komponenten sind in \textbf{RVIZ} zu sehen? \aufg\
+
+\item 
+Betrachten Sie die entsprechende \textit{launch file} unter \textit{carla\_ad\_demo/launch} zur AD Demo. Welche Prozesse werden aufgerufen? \"{U}berlegen Sie, welche Aufgaben diese erf\"{u}llen. 
+\aufg
+
+\item 
+\"{A}ndern Sie den \textit{spawn\_point} ab und durchlaufen Sie erneut die Demo. Die Werte entnehmen Sie dem Pygame-Fenster an einer Position ihrer Wahl.
+
+\item 
+Schauen Sie sich das dazugeh\"{o}rige Python-Skript zur Pfadplanung unter \textit{carla\_waypoint\_publisher/src/carla\_waypoint\_publisher} an. Wie wird hier die Pfadplanung realisiert? Welche Informationen erh"{a}lt das AD von der Simulation? 
+\aufg
+
+\item 
+Wie unterscheiden sich die Aufgaben des \textit{Global planner} und \textit{Local planner}? Wie ist der \textit{Local planner} unter \textit{carla\_ad\_agent/src/carla\_ad\_agent} im Carla Simulator implementiert? Wie wird hier die Pfadverfolgung geregelt? 
+\aufg
+
+\item 
+Bearbeiten Sie die Schritte \textbf{\nameref{sec:planningtracking}} (Anhang \ref{sec:planningtracking}). Beschreiben Sie das Verfahren \textit{Pure Pursuit}. Schauen Sie dazu auch in den dazugeh\"{o}rigen Code. 
+\aufg
+
+\item 
+Optional: Setzen Sie sich mit dem Code Beispiel auseinander. Wie ist hier die die \textit{Pfadplanung} und \textit{-verfolgung} implementiert. 
+
+\end{enumerate}
+
+\appendix
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Localization and navigation within known environments}
+\label{sec:locnav}
+
+In the previous session we have learned how to generate an occupancy grid map of an unknown environment in the \textbf{Carla}. Now we want to localize ourself within that map and navigate. \\
+
+In this session we will make use of \textit{Adaptive Monte Carla Localization} and the build-in features of the \textbf{Carla}. All required files for this workshop can be found in the ROS package \textit{afrp3}. Just download them from \textbf{Teams} and move it into  the \textit{source} directory of your \textit{catkin workspace}. \\
+
+Append the \textit{.bashrc} from the \textbf{ROS}-package \textit{afrp3} to your \textit{.bashrc} and source it.
+
+\code{
+\item echo {\dq source /opt/ros/noetic/setup.bash\dq} \arrow \addtilde/.bashrc
+\item echo {\dq source \addtilde/carla\_ws/src/afrp3/.bashrc\dq} \arrow \addtilde/.bashrc
+\item source \addtilde/.bashrc
+}
+
+\vspace{-6pt}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Localization in grid-based maps with AMCL}
+
+
+Let's start \textbf{Carla}, the \textbf{Carla ROS Bridge} and \textbf{RVIZ}.
+
+\code{
+\setcounter{enumi}{3}
+\item /opt/carla-simulator/CarlaUE4.sh \&
+\item roscore \&
+\item source \addtilde/carla\_ws/devel/setup.bash 
+\item roslaunch afrp3 carla\_ros\_bridge.launch
+\item roslaunch afrp3 carla\_rviz.launch
+}
+
+Our vehicle named \textit{ego\_vehicle} has spawned. Now we need to convert the generated \textit{3D point cloud} to a \textit{2D laser scan} and all \textit{Twist} commands to \textit{Carla Control} commands: 
+
+\code{
+\setcounter{enumi}{8}
+\item roslaunch afrp3 carla\_laser\_scan.launch
+\item roslaunch carla\_twist\_to\_control carla\_twist\_to\_control.launch
+}
+
+Load your previously generated map or choose one of the two provided: 
+
+\raus{
+\code{
+\setcounter{enumi}{10}
+\item rosrun map\_server map\_server \addtilde/carla\_ws/src/afrp3/map/carla\_map\_\\\textit{map\_type}.yaml
+}
+}
+
+\code{
+\setcounter{enumi}{10}
+\item roslaunch afrp3 carla\_map.launch map\_type:=\textit{hector or gmapping}
+}
+
+
+Start \textit{AMCL}: 
+
+\code{
+\setcounter{enumi}{11}
+\item roslaunch afrp3 carla\_amcl.launch
+}
+
+Since \textit{AMCL} doesn't perform a initial position estimation and just spawns the vehicle at the position predefined in the \textit{launch} file, \textbf{2D Pose Estimate} can set a starting point. It can also be used to reposition´ the vehicle at any given time. \\
+
+The \textbf{RQT Gui} can be used to control the vehicle using \textit{Twist} commands.
+
+\code{
+\setcounter{enumi}{12}
+\item rosrun rqt\_robot\_steering rqt\_robot\_steering
+}
+
+Now, in the upper left corner, change the subscribed topic to \textit{/carla/ego\_vehicle/twist}. And set the maximum/minimum velocity to \textit{10.0/-10.0}. Steering should now work. 
+
+\vspace{-6pt}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Path planning and tracking with move\_base}
+
+To autonomously navigate within the known environment, we need a \textit{global planner} and \textit{local planner} with their respective costmaps. The global path planning the algorithms \textit{A*} and \textit{D*} are available. For local path planning the packages \textit{base\_planner}, \textit{DWA\_local\_planner} and \textit{TEB\_local\_planner} can be used. The costmaps will help to find the optimal path to the target position while maintaining the lowest costs. \\
+
+
+By default, \textit{A*} is set for global planning. Set \textit{DWA} for local planning. Now, let's start the navigation:
+
+\code{
+\setcounter{enumi}{13}
+\item roslaunch afrp3 carla\_move\_base.launch dwa:=true
+}
+
+Use \textbf{2D Nav Goal} to set a target position.
+
+\vspace{-6pt}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection*{Editing parameters}
+
+All parameters within \textbf{ROS} can be seen and modified in real-time via \textbf{RQT}:
+
+\code{
+\setcounter{enumi}{14}
+\item rosrun rqt\_gui rqt\_gui
+}
+
+\textbf{Note:} This will only temporarily change the settings! But the effects of the change will show immediately! \\
+
+\vspace{-6pt}
+
+Parameter settings for the \textit{global} and \textit{local costmaps} can be found in:
+
+\code{
+\setcounter{enumi}{15}
+\item cd \addtilde/carla\_ws/src/afrp3/param
+\item gedit global\_costmap\_params.yaml
+\item gedit local\_costmap\_params.yaml
+}
+
+The \textit{inflation\_radius} and \textit{cost\_scaling\_factor} will have a significant influence on the costmaps and thus on the path planning process. \\
+
+To choose between the \textit{A*} and \textit{D*} algorithm for the global navigation, edit the following param file:
+
+\code{
+\setcounter{enumi}{18}
+\item gedit global\_planner\_params.yaml
+}
+
+The local planner can be changes by setting the arguments \textit{dwa}, \textit{teb} or \textit{base} to \textit{true}. The respective parameter file will be loaded as well:
+
+\code{
+\setcounter{enumi}{19}
+\item roslaunch afrp3 carla\_move\_base.launch dwa:=true \textit{or} teb:=true \textit{or} base:=true
+}
+
+Start \textbf{RQT} to change parameters:
+
+\code{
+\setcounter{enumi}{20}
+\item rosrun rqt\_reconfigure rqt\_reconfigure -""-force-discover
+}
+
+and confirm your changes with \textbf{ENTER}. Hit \textbf{Refresh} in case parameters are missing. \\
+
+\vspace{-6pt}
+
+\textbf{Note:} Changes parameters will not be saved!\\
+
+\vspace{-6pt}
+
+The commands for localization with \textbf{AMCL} and navigation with \textbf{move\_base} can be started simultaneously using the provided launch file \textit{start\_carla\_navigation.launch}. \\
+
+\vspace{-6pt}
+
+Just type:
+
+\code{
+\setcounter{enumi}{21}
+\item roslaunch afrp3 start\_carla\_navigation.launch slam\_method:=\textit{hector or gmapping} dwa:=true
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Using the build-in navigation in Carla Simulator}
+\label{sec:carlanav}
+
+\subsection*{The Autonomous Driving Demo}
+
+Start the \textbf{Carla Simulator} with your graphic settings, the \textbf{roscore} and \textbf{RVIZ}:
+
+\code{
+\setcounter{enumi}{22}
+\item /opt/carla-simulator/CarlaUE4.sh\&
+\item roscore \&
+\item rosrun rviz rviz -d \addtilde/carla\_ws/src/afrp3/rviz/carla\_ad\_demo.rviz \&
+\vspace{-12pt}
+}
+
+Start the demo:
+
+\code{
+\setcounter{enumi}{25}
+\item roslaunch carla\_ad\_demo carla\_ad\_demo.launch
+}
+
+Now, the generated path as well as the current and target pose of the vehicle can be seen. Throughout the path tracking process, both are updated. \\
+
+The respective \textit{launch file} can be viewed and edited in:
+
+\code{
+\setcounter{enumi}{26}
+\item gedit \addtilde/carla\_ws/src/ros-bridge/carla\_ad\_demo/launch/carla\_ad\_demo\\.launch
+}
+
+To take a deeper look into how the path planning is implemented in this demo, the respective python script has to be viewed in:
+
+\code{
+\setcounter{enumi}{27}
+\item gedit \addtilde/carla\_ws/src/ros-bridge/carla\_waypoint\_publisher/src/carla\\\_waypoint\_publisher/carla\_waypoint\_publisher.py
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Path planning and tracking}
+\label{sec:planningtracking}
+
+As you have seen in the previous chapters, the \textbf{Carla} offers the possibility to interact with its simulation environment via a \textit{PythonAPI}. Examples are at:
+
+\code{
+\setcounter{enumi}{28}
+\item cd /opt/carla-simulator/PythonAPI/examples
+}
+
+A full documentation of all features can be found at: \\
+
+\url{https://carla.readthedocs.io/en/latest/python_api/} \\
+
+For more tutorials, visit: \\
+
+\url{https://carla.readthedocs.io/en/0.9.7/python_api_tutorial/} \\
+
+\textbf{Note:} Some tutorials may be outdated!
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Lateral and longitudinal control for path tracking}
+
+The following algorithms for \textit{lateral control} or ``steering'' of the vehicle in \textit{path tracking} are commonly used in Autonomous Driving:
+
+\begin{enumerate}
+
+\item Pure Pursuit
+\item Model predictive control (MPC)
+\item Linear-quadratic regulator (LQR)
+\item Stanley Controller (Stanford University)
+
+\end{enumerate}
+
+A PID-controller is used for \textit{longitudinal control}. \\
+
+This workshop contains a small demonstration that shows how the \textit{Pure Pursuit}-Algorithm works. \\
+
+To start the very simplified simulation, go to the \textit{Pure Pursuit example} in \textit{examples} folder and start the simulation:
+
+\code{
+\setcounter{enumi}{29}
+\item cd \addtilde/catkin\_ws/src/afrp3/examples/pure\_pursuit
+\item python sim.py
+}
+
+Navigation specific python scripts, that are implemented in \textit{Carla Simulator} can be found in:
+ 
+\code{
+\setcounter{enumi}{31}
+\item cd /opt/carla-simulator/PythonAPI/carla/agents/navigation
+}
+
+The lateral and longitudinal controller is implemented in \textit{controller.py}. A closer look into these files will help to understand how the general navigation is implemented. 
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Code Example}
+
+This seesion also includes a basic code example for navigation using the \textbf{PythonAPI}. That includes python scripts for setup of the simulation environment, the vehicle and the camera. \\
+
+Start the simulation:
+
+\code{
+\setcounter{enumi}{32}
+\item cd \addtilde/carla\_ws/src/afrp3/examples/carla\_pure\_pursuit
+\item python citymap.py
+\item python camera.py
+\item python simpleclient.py
+}
+
+The original version can be found at: \url{https://github.com/copotron/sdv-course}
+
+A working example can be found:
+
+\code{
+\setcounter{enumi}{36}
+\item cd \addtilde/carla\_ws/src/afrp3/examples/carla\_navigation
+\item python carla\_example.py
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Higher functions of Autonomous Driving in Carla Simulator}
+
+Carla has developed a \textbf{scenario runner} to simulate predefined traffic scenarios. \\
+
+Just download the latest \textit{Scenario Runner} from \textbf{github} to your \textit{catkin source} folder and build the entire folder again.
+
+\code{
+\setcounter{enumi}{38}
+\item git clone https://github.com/carla-simulator/scenario\_runner
+\item cd \addtilde/carla\_ws
+\item rm -rf build/ devel/
+\item catkin\_make
+}
+
+To start, go to the scenario directory, set the scenario and start manual control:
+
+\code{
+\setcounter{enumi}{42}
+\item cd src/scenario\_runner
+\item ./scenario\_runner.py -{-}scenario FollowLeadingVehicle\_1 -{-}reloadWorld
+\item ./manual\_control.py
+}
+
+A list of scenarios can be found here: \\
+\url{https://carla-scenariorunner.readthedocs.io/en/latest/list_of_scenarios/} \\
+
+\vspace{-6pt}
+
+Full documentation can be found here: \\ \url{https://carla-scenariorunner.readthedocs.io/en/latest/}
+
+\end{page}
+\end{document}
