@@ -1,12 +1,9 @@
 sudo apt-get update
-sudo apt-get install ros-noetic-dwa-local-planner ros-noetic-global-planner ros-noetic-base-local-planner ros-noetic-pointcloud-to-laserscan ros-noetic-amcl -y
-cd ­~/carla_ws/src
-git clone https://github.com/demuma/afrp3
+sudo apt-get install ros-noetic-dwa-local-planner ros-noetic-global-planner ros-noetic-base-local-planner ros-noetic-pointcloud-to-laserscan ros-noetic-amcl ros-noetic-carla-msgs -y &&
+cd ~/carla_ws/src/
 git clone https://github.com/carla-simulator/ros-bridge
-rosdep update
-rosdep install --from-paths src --ignore-src --rosdistro noetic
 cd ros-bridge
-python -m pip install -r requirements.txt
+./install_dependencies.sh
 source ../afrp3/.bashrc
-cd ../..
+cd ~/carla_ws
 catkin_make
