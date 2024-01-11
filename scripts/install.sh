@@ -8,5 +8,5 @@ rosdep install --from-paths src --ignore-src --rosdistro noetic
 cd ros-bridge
 python -m pip install -r requirements.txt
 source ../afrp3/.bashrc
-cd ..
+cd ../..
 catkin_make
