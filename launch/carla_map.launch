@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+
+<launch>
+  <!-- Arguments -->
+  <arg name="map_file" default="$(find afrp3)/map/carla_map.yaml"/>
+  <arg name="open_rviz" default="true"/>
+  <arg name="move_forward_only" default="false"/>
+  <arg name="map_type" default="gmapping"/>
+  
+ <!-- Map server -->
+  <group if="$(eval map_type == 'hector')">
+   <node pkg="map_server" name="map_server" type="map_server" args="$(arg map_file)"/>
+  </group>
+  <group if="$(eval map_type == 'gmapping')">
+   <node pkg="map_server" name="map_server" type="map_server" args="$(arg map_file)"/>
+  </group>
+  <group if="$(eval map_type == '')">
+   <node pkg="map_server" name="map_server" type="map_server" args="$(arg map_file)"/>
+  </group>
+</launch>
