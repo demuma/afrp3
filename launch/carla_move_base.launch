@@ -5,22 +5,47 @@
   <arg name="cmd_vel_topic" default="/carla/ego_vehicle/twist" />
   <arg name="odom_topic" default="/carla/ego_vehicle/odometry" />
   <arg name="move_forward_only" default="false"/>
+  <arg name="local_planner" default="dwa"/>
 
   <!-- move_base -->
-  <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+  <group if="$(eval local_planner == 'dwa')">
+   <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
     <param name="base_local_planner" value="dwa_local_planner/DWAPlannerROS" />
-    <!--<param name="base_local_planner" value="base_local_planner/TrajectoryPlannerROS" />-->
-    <!--<param name="base_local_planner" value="teb_local_planner/TebLocalPlannerROS" />-->
+    <rosparam file="$(find afrp3)/param/dwa_local_planner_params.yaml" command="load" />
+    <param name="DWAPlannerROS/min_vel_x" value="5.0" if="$(arg move_forward_only)" />
     <rosparam file="$(find afrp3)/param/costmap_common_params.yaml" command="load" ns="global_costmap" />
     <rosparam file="$(find afrp3)/param/costmap_common_params.yaml" command="load" ns="local_costmap" />
     <rosparam file="$(find afrp3)/param/local_costmap_params.yaml" command="load" />
     <rosparam file="$(find afrp3)/param/global_costmap_params.yaml" command="load" />
     <rosparam file="$(find afrp3)/param/move_base_params.yaml" command="load" />
-    <rosparam file="$(find afrp3)/param/dwa_local_planner_params.yaml" command="load" />
-    <!--<rosparam file="$(find afrp3)/param/base_local_planner_params.yaml" command="load" />-->
-    <!--<rosparam file="$(find afrp3)/param/teb_local_planner_params.yaml" command="load" />-->
     <remap from="cmd_vel" to="$(arg cmd_vel_topic)"/>
     <remap from="odom" to="$(arg odom_topic)"/>
-    <param name="DWAPlannerROS/min_vel_x" value="5.0" if="$(arg move_forward_only)" />
-  </node>
+   </node>
+  </group>
+  <group if="$(eval local_planner == 'base')">
+   <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+    <param name="base_local_planner" value="base_local_planner/TrajectoryPlannerROS" />
+    <rosparam file="$(find afrp3)/param/base_local_planner_params.yaml" command="load" />
+    <rosparam file="$(find afrp3)/param/costmap_common_params.yaml" command="load" ns="global_costmap" />
+    <rosparam file="$(find afrp3)/param/costmap_common_params.yaml" command="load" ns="local_costmap" />
+    <rosparam file="$(find afrp3)/param/local_costmap_params.yaml" command="load" />
+    <rosparam file="$(find afrp3)/param/global_costmap_params.yaml" command="load" />
+    <rosparam file="$(find afrp3)/param/move_base_params.yaml" command="load" />
+    <remap from="cmd_vel" to="$(arg cmd_vel_topic)"/>
+    <remap from="odom" to="$(arg odom_topic)"/>
+   </node>
+  </group>
+  <group if="$(eval local_planner == 'teb')">
+   <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+    <param name="base_local_planner" value="teb_local_planner/TebLocalPlannerROS" />
+    <rosparam file="$(find afrp3)/param/teb_local_planner_params.yaml" command="load" />
+    <rosparam file="$(find afrp3)/param/costmap_common_params.yaml" command="load" ns="global_costmap" />
+    <rosparam file="$(find afrp3)/param/costmap_common_params.yaml" command="load" ns="local_costmap" />
+    <rosparam file="$(find afrp3)/param/local_costmap_params.yaml" command="load" />
+    <rosparam file="$(find afrp3)/param/global_costmap_params.yaml" command="load" />
+    <rosparam file="$(find afrp3)/param/move_base_params.yaml" command="load" />
+    <remap from="cmd_vel" to="$(arg cmd_vel_topic)"/>
+    <remap from="odom" to="$(arg odom_topic)"/>
+   </node>
+  </group>
 </launch>
