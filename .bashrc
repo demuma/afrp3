@@ -121,9 +121,9 @@ fi
 
 export ROS_HOSTNAME=localhost
 export CARLA_ROOT=/opt/carla-simulator
-export PYTHONPATH=$PYTHONPATH:$CARLA_ROOT/PythonAPI/carla/dist/carla-0.9.11-py3.7-linux-x86_64.egg:$CARLA_ROOT/PythonAPI/carla
+export PYTHONPATH=$PYTHONPATH:$CARLA_ROOT/PythonAPI/carla/dist/carla-0.9.13-py3.7-linux-x86_64.egg:$CARLA_ROOT/PythonAPI/carla
 export PYTHONPATH=$PYTHONPATH:$CARLA_ROOT/PythonAPI/carla/agents
 export PYTHONPATH=$PYTHONPATH:$CARLA_ROOT/PythonAPI
 source /opt/ros/noetic/setup.bash
-source ~/catkin_ws/devel/setup.bash
-export SCENARIO_RUNNER_ROOT=/home/networker/catkin_ws/src/scenario_runner
+source ~/carla_ws/devel/setup.bash
+export SCENARIO_RUNNER_ROOT=/home/carlauser/carla_ws/src/scenario_runner
