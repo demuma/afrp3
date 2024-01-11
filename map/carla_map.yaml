@@ -1,4 +1,4 @@
-image: carla_map_new.pgm
+image: carla_map.pgm
 resolution: 0.100000
 origin: [-61.800000, -385.000000, 0.000000]
 negate: 0
