@@ -50,6 +50,14 @@
   <!--   <doc_depend>doxygen</doc_depend> -->
   <build_depend>pointcloud_to_laserscan</build_depend>
   <exec_depend>pointcloud_to_laserscan</exec_depend>
+  <build_depend>teb_local_planner</build_depend>
+  <exec_depend>teb_local_planner</exec_depend>
+  <build_depend>base_local_planner</build_depend>
+  <exec_depend>base_local_planner</exec_depend>
+  <build_depend>dwa_local_planner</build_depend>
+  <exec_depend>dwa_local_planner</exec_depend>
+  <build_depend>global_planner</build_depend>
+  <exec_depend>global_planner</exec_depend>
   <build_depend>amcl</build_depend>
   <exec_depend>amcl</exec_depend>
   <build_depend>move_base</build_depend>
