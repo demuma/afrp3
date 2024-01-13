@@ -5,7 +5,7 @@
   <arg name="map_file" default="$(find afrp3)/map/carla_map"/>
   <arg name="open_rviz" default="true"/>
   <arg name="move_forward_only" default="false"/>
-  <arg name="map_type" default="gmapping"/>
+  <arg name="map_type" default="hector"/>
   
  <!-- Map server -->
   <group if="$(eval map_type == 'hector')">
