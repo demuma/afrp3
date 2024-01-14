@@ -33,7 +33,7 @@ vehicle_bp = bp_lib.filter('vehicle.tesla.model3')[0]
 
 transform = carla.Transform()
 
-transform.location.x = 220
+transform.location.x = 80
 transform.location.y = -1.6
 transform.location.z = 1.85
 
@@ -44,7 +44,7 @@ transform.rotation.roll = 0
 vehicle = world.spawn_actor(vehicle_bp, transform)
 
 spectator = world.get_spectator()
-sp_transform = carla.Transform(transform.location + carla.Location(z=110, x=-105, y=20),
+sp_transform = carla.Transform(transform.location + carla.Location(z=110, x=-80, y=50),
                                carla.Rotation(yaw=90, pitch=-90))
 spectator.set_transform(sp_transform)
 
@@ -134,10 +134,10 @@ noOfWp = 100
 t = 0
 while t < noOfWp:
     wp_next = wp.next(2.0)
-    #if len(wp_next) > 1:
-    #    wp = wp_next[1]
-    #else:
-    #    wp = wp_next[0]
+    if len(wp_next) > 1:
+        wp = wp_next[1]
+    else:
+        wp = wp_next[0]
 
     waypoint_obj_list.append(wp)
     waypoint_list.insert(t, (wp.transform.location.x, wp.transform.location.y))
