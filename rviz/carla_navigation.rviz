@@ -234,7 +234,7 @@ Visualization Manager:
       Topic: /move_base/DWAPlannerROS/local_plan
       Unreliable: false
       Value: true
-    - Alpha: 0.5
+    - Alpha: 1
       Class: rviz/Map
       Color Scheme: costmap
       Draw Behind: false
@@ -253,7 +253,7 @@ Visualization Manager:
       Topic: /move_base/global_costmap/footprint
       Unreliable: false
       Value: true
-    - Alpha: 1
+    - Alpha: 0.699999988079071
       Class: rviz/Map
       Color Scheme: costmap
       Draw Behind: false
@@ -296,8 +296,6 @@ Visualization Manager:
         All Enabled: false
         ego_vehicle:
           Value: true
-        ego_vehicle/collision:
-          Value: true
         ego_vehicle/depth_front:
           Value: true
         ego_vehicle/dvs_front:
@@ -305,8 +303,6 @@ Visualization Manager:
         ego_vehicle/gnss:
           Value: true
         ego_vehicle/imu:
-          Value: true
-        ego_vehicle/lane_invasion:
           Value: true
         ego_vehicle/lidar:
           Value: false
@@ -331,8 +327,6 @@ Visualization Manager:
       Tree:
         map:
           ego_vehicle:
-            ego_vehicle/collision:
-              {}
             ego_vehicle/depth_front:
               {}
             ego_vehicle/dvs_front:
@@ -340,8 +334,6 @@ Visualization Manager:
             ego_vehicle/gnss:
               {}
             ego_vehicle/imu:
-              {}
-            ego_vehicle/lane_invasion:
               {}
             ego_vehicle/lidar:
               {}
@@ -474,7 +466,7 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Scale: 6.787269592285156
+      Scale: 7.427587985992432
       Target Frame: ego_vehicle
       X: 3.1662588119506836
       Y: -35.54132080078125
